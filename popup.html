@@ -1,0 +1,34 @@
+<HEAD>
+
+<style>
+  body { width: 300px; }
+  textarea { width: 250px; height: 100px;}
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+
+function saveSelText() {
+var locationObj = document.location; 
+     chrome.tabs.getSelected(null, function(tab) {
+document.getElementById('currentLink').innerHTML = tab.url;
+    chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function (response) {
+	
+      var text = document.getElementById('text'); 
+      text.innerHTML = response.data;
+    });
+  });
+}
+function viewLinks() {
+
+//Opens the HTML with links saved and annotated highlights
+window.open('saved-links.html')
+}
+
+</script>
+</HEAD>
+<form name="myform">
+<textarea id="text"> </textarea>
+<textarea id="currentLink"> </textarea>
+</form>
+<input type="button" value="Save Link" onclick="saveSelText()"> 
+<input type="button" value="View Saved Links" onmousedown="viewLinks()">
+<input type="button" value="View Settings" onmousedown="viewSettings()"> 
